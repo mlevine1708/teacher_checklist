@@ -1,6 +1,6 @@
 # Specifications for the Sinatra Assessment
 
-Specs:t 
+Specs:
 - [x] Use Sinatra to build the app
 - [ ] Use ActiveRecord for storing information in a database
 - [ ] Include more than one model class (e.g. User, Post, Category)
