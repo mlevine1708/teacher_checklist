@@ -36,4 +36,9 @@ class TeachersController < ApplicationController
     
   end 
   
+  post '/users' do 
+    #here is where we will create a new user and persist the new user to the db 
+  end 
+  
+  #params is a data hash 
 end
