@@ -14,7 +14,10 @@ class TeachersController < ApplicationController
       
     #log the user in = create the user session 
     #redirect to the user's landing page
-    
+      session[:user_id] = @teachers 
+      puts session 
+      redirect "users/#{@teachers}"
+      
     else 
       #tell the user they entered invalid credentials
       #redirect them to the login page 
@@ -25,5 +28,10 @@ class TeachersController < ApplicationController
   get '/signup' do
     
   end
+  
+  get '/users/:id' do
+    "this will be the user show route"
+    
+  end 
   
 end
