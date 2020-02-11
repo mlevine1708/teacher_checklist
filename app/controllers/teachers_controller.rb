@@ -25,8 +25,10 @@ class TeachersController < ApplicationController
   end
   #the purpose of this route is to receive the login form and sign the user in (create a session)
   
+  #the job of signup is to render the sign up form 
   get '/signup' do
-    
+    #erb (render) a view 
+    erb :signup 
   end
   
   get '/users/:id' do

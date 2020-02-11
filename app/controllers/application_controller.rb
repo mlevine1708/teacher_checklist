@@ -19,8 +19,10 @@ class ApplicationController < Sinatra::Base
       #double bang (!!) 
     end
     
-    def current_user
-      @current_user || = User.find_by(id: session[:user_id])
-    end
+    #something wrong with this block 
+    #def current_user
+     # @current_user || = User.find_by(id: session[:user_id])
+    #end
+  end 
 end
 
