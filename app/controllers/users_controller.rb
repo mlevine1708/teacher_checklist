@@ -1,4 +1,4 @@
-class TeachersController < ApplicationController
+class UsersController < ApplicationController
   
   get '/login' do
     erb :login 
@@ -8,15 +8,15 @@ class TeachersController < ApplicationController
   
   post '/login' do
     #Find the user
-    @teacher = Teachers.find_by(username: params[:username])
+    @user = Users.find_by(username: params[:username])
     #Authenticate the user - verify the user is who they say they are 
-    if @teacher.authenticate(params[:password])
+    if @user.authenticate(params[:password])
       
     #log the user in = create the user session 
     #redirect to the user's landing page
-      session[:user_id] = @teachers 
+      session[:user_id] = @users 
       puts session 
-      redirect "users/#{@teachers}"
+      redirect "users/#{@users}"
       
     else 
       #tell the user they entered invalid credentials
@@ -33,6 +33,7 @@ class TeachersController < ApplicationController
   
   get '/users/:id' do
     "this will be the user show route"
+    @user = User.find_by(:id params[:id])
     erb :'/users/show'
     
   end 
@@ -46,7 +47,8 @@ class TeachersController < ApplicationController
       redirect '/users/#{@user.id}'
       erb :'/users/show'
     else 
-      
+    end 
+  
   end 
   
   #params is a data hash 
