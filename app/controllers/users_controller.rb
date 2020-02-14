@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       
     #log the user in = create the user session 
     #redirect to the user's landing page
-      session[:user_id] = @users 
+      session[:user_id] = @user.id
       puts session 
       redirect "users/#{@users}"
       
@@ -31,12 +31,6 @@ class UsersController < ApplicationController
     erb :signup 
   end
   
-  get '/users/:id' do
-    "this will be the user show route"
-    @user = User.find_by(:id params[:id])
-    erb :'/users/show'
-    
-  end 
   
   post '/users' do 
     #here is where we will create a new user and persist the new user to the db 
@@ -44,12 +38,27 @@ class UsersController < ApplicationController
     if params[:name] != "" && params[:username] != "" && params[:password] != ""
       
       @user = User.create(params)
+      session[:user_id] = @user.id
       redirect '/users/#{@user.id}'
       erb :'/users/show'
     else 
+      redirect '/signup'
     end 
   
   end 
+  
+  get '/users/:id' do
+    "this will be the user show route"
+    @user = User.find_by(:id params[:id])
+    
+    erb :'/users/show'
+    
+  end 
+  
+  get '/logout' do
+    session.clear
+    redirect '/'
+  end
   
   #params is a data hash 
 end
