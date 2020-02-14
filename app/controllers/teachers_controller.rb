@@ -33,11 +33,20 @@ class TeachersController < ApplicationController
   
   get '/users/:id' do
     "this will be the user show route"
+    erb :'/users/show'
     
   end 
   
   post '/users' do 
     #here is where we will create a new user and persist the new user to the db 
+    #only want to persist a user that has a name, username, and password 
+    if params[:name] != "" && params[:username] != "" && params[:password] != ""
+      
+      @user = User.create(params)
+      redirect '/users/#{@user.id}'
+      erb :'/users/show'
+    else 
+      
   end 
   
   #params is a data hash 
