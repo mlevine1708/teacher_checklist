@@ -21,11 +21,11 @@ end
   
   #show page for student student_entries - don't think I need this
   
-  get '/student_entries/:id' do
-    @student_entry = StudentEntry.find(params[:id])
-    erb :
+  #get '/student_entries/:id' do
+   # @student_entry = StudentEntry.find(params[:id])
+    #erb :
   
   
   #index route for all student_entries
   
-end
+
