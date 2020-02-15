@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class TeachersController < ApplicationController
   
   get '/login' do
     erb :login 
@@ -6,23 +6,33 @@ class UsersController < ApplicationController
   #the purpose of this route is to render the login page/form 
   
   
-  post '/login' do
+  post '/signup' do 
+    if params[:username] == "" || params[:password] == ""
+      redirect to '/signup'
+    else
+      @teacher = Teacher.create(:username => params[:username], :password => params[:password])
+      session[:user_id] = @teacher.id
+      redirect '/login'
+    end
+  end
+  
+  #post '/login' do
     #Find the user
-    @user = Users.find_by(username: params[:username])
+   # @user = Users.find_by(username: params[:username])
     #Authenticate the user - verify the user is who they say they are 
-    if @user.authenticate(params[:password])
+    #if @user.authenticate(params[:password])
       
     #log the user in = create the user session 
     #redirect to the user's landing page
-      session[:user_id] = @user.id
-      puts session 
-      redirect "users/#{@users}"
+     # session[:user_id] = @user.id
+      #puts session 
+      #redirect "users/#{@users}"
       
-    else 
+    #else 
       #tell the user they entered invalid credentials
       #redirect them to the login page 
-    end 
-  end
+    #end 
+  #end
   #the purpose of this route is to receive the login form and sign the user in (create a session)
   
   #the job of signup is to render the sign up form 
@@ -31,28 +41,46 @@ class UsersController < ApplicationController
     erb :signup 
   end
   
+  get '/users/:id' do
+    if !logged_in?
+      redirect '/welcome'
+    end
+
+    @teacher = Teacher.find(params[:id])
+    if !@teacher.nil? && @teacher == current_user
+      erb :'users/show'
+    else
+      redirect '/login'
+    end
+  end
   
   post '/users' do 
     #here is where we will create a new user and persist the new user to the db 
     #only want to persist a user that has a name, username, and password 
     if params[:name] != "" && params[:username] != "" && params[:password] != ""
       
-      @user = User.create(params)
-      session[:user_id] = @user.id
-      redirect '/users/#{@user.id}'
-      erb :'/users/show'
+      @teachers = Teachers.create(params)
+      session[:user_id] = @teachers.id
+      redirect '/user/'
+      erb :'/user/show'
     else 
       redirect '/signup'
     end 
   
   end 
   
+  get '/user/' do
+    
+    erb :user  
+    
+  end
+  
   get '/users/:id' do
     "this will be the user show route"
-    @user = User.find_by(:id params[:id])
-    
+    if !logged_in?
+      redirect '/users/show'
+    end
     erb :'/users/show'
-    
   end 
   
   get '/logout' do
