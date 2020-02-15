@@ -15,9 +15,7 @@ class TeachersController < ApplicationController
     if params[:username] == "" || params[:password] == ""
       redirect to '/signup'
     else
-      @teacher = Teacher.create(:username => params[:username], :password => params[:password])
-      @teacher.save
-      session[:user_id] = @teacher.id
+      Teacher.create(:username => params[:username], :password => params[:password])
       redirect '/login'
     end
   end 
@@ -32,18 +30,12 @@ class TeachersController < ApplicationController
   end 
   
   post '/login' do
-    #Find the user
-   @teachers = User.find_by(:username => params[:username])
-    #Authenticate the user - verify the user is who they say they are 
-    if @teacher.authenticate(params[:password])
-      
-    #log the user in = create the user session 
-    #redirect to the user's landing page
+    @Teacher = Teacher.find_by(:username => params[:username])
+    if @Teacher != nil && @teacher.password == params[:password]
       session[:user_id] = @teacher.id
-      redirect "users/#{@teacher}"
-    else 
-      redirect to '/signup'
+      redirect to '/account'
     end
+    erb :error
   end
       #tell the user they entered invalid credentials
       #redirect them to the login page 

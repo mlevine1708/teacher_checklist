@@ -11,6 +11,10 @@ class ApplicationController < Sinatra::Base
     erb :welcome
   end
   
+  post '/users' do
+    redirect '/login'
+  end
+  
   helpers do 
     
     def logged_in?
