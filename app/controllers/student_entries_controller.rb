@@ -12,12 +12,19 @@ class StudentEntriesController < ApplicationController
     
     if params[:content] != ""
       @student_entry = StudentEntry.create(content: params[:content], user_id: current_user.id)
-      redirect "/student_entries/#{@student_entry.id)"
+      redirect '/student_entries/#{@student_entry.id)'
     else 
       redirect '/student_entries/new'
     end 
-  end 
+  end
+end 
+  
   #show page for student student_entries - don't think I need this
+  
+  get '/student_entries/:id' do
+    @student_entry = StudentEntry.find(params[:id])
+    erb :
+  
   
   #index route for all student_entries
   
