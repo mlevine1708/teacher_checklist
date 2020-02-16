@@ -10,5 +10,5 @@ use Rack::MethodOverride
 #here is where I will mount other controllers with 'use'
 
 run ApplicationController
-use TeachersController
+use UsersController
 use StudentEntriesController

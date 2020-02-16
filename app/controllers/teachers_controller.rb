@@ -1,4 +1,4 @@
-class TeachersController < ApplicationController
+class UsersController < ApplicationController
   
   
   #the purpose of this route is to render the login page/form 
@@ -15,7 +15,7 @@ class TeachersController < ApplicationController
     if params[:username] == "" || params[:password] == ""
       redirect to '/signup'
     else
-      Teacher.create(:username => params[:username], :password => params[:password])
+      User.create(:username => params[:username], :password => params[:password])
       redirect '/login'
     end
   end 
@@ -30,13 +30,14 @@ class TeachersController < ApplicationController
   end 
   
   post '/login' do
-    @Teacher = Teacher.find_by(:username => params[:username])
-    if @Teacher != nil && @teacher.password == params[:password]
-      session[:user_id] = @teacher.id
-      redirect to '/account'
+    @user = Users.find_by(:username => params[:username])
+    if @user != nil && @user.password == params[:password]
+      session[:user_id] = @user.id
+      redirect to '/login'
     end
-    erb :error
+    erb :user
   end
+  
       #tell the user they entered invalid credentials
       #redirect them to the login page 
     #end 
