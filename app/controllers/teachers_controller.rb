@@ -38,14 +38,6 @@ class UsersController < ApplicationController
     erb :user
   end
   
-      #tell the user they entered invalid credentials
-      #redirect them to the login page 
-    #end 
-  #end
-  #the purpose of this route is to receive the login form and sign the user in (create a session)
-  
-  #the job of signup is to render the sign up form 
-  
   
   get '/logout' do
     if logged_in?
@@ -55,4 +47,6 @@ class UsersController < ApplicationController
       redirect to '/'
     end
   end
+  
+  
 end

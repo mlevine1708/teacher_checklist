@@ -12,9 +12,9 @@ class StudentEntriesController < ApplicationController
    
   post '/student_entries' do
       @student = Student.create(params[:student])
-    if !params["name"]["grade_level"].empty?
-      @student.user = User.create(name: params["name"]["grade_level"])
-    end
+   # if !params["name"]["grade_level"].empty?
+    #  @student.user = User.create(name: params["name"]["grade_level"])
+    #end
     
     @student.save
     
