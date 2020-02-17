@@ -1,0 +1,7 @@
+<h1><%=@user.name%></h1>
+<h4>Students:</h4>
+<ul>
+  <%@user.students.each do |student|%>
+  <li><%=student.name%></li>
+  <%end%>
+</ul>
