@@ -2,15 +2,15 @@ class StudentsController < ApplicationController
   #get student_entries/new to render a form to create new entry
   get '/students' do
     @students = Student.all
-    erb :'/student_entries/index'
+    erb :'/students/index'
   end
   
   get '/students/new' do
-    if logged_in?
-      @current_user
-    erb :'/student_entries/new'
-    else 
-      redirect '/login'
+    #if logged_in?
+     # @current_user
+    erb :'/students/new'
+   # else 
+      #redirect '/login'
     end
   end 
   
@@ -46,8 +46,8 @@ class StudentsController < ApplicationController
     @student.save
     
     redirect to "students/#{@student.id}"
-  end
 end
+
 
   
 
