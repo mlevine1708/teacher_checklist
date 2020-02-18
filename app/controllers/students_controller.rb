@@ -1,37 +1,41 @@
-class StudentEntriesController < ApplicationController
+class StudentsController < ApplicationController
   #get student_entries/new to render a form to create new entry
-  get '/student_entries' do
+  get '/students' do
     @students = Student.all
     erb :'/student_entries/index'
   end
   
-  get '/student_entries/new' do
+  get '/students/new' do
+    if logged_in?
+      @current_user
     erb :'/student_entries/new'
+    else 
+      redirect '/login'
+    end
   end 
   
    
-  post '/student_entries' do
-      @student = Student.create(params[:student])
-   # if !params["name"]["grade_level"].empty?
-    #  @student.user = User.create(name: params["name"]["grade_level"])
-    #end
-    
+  post '/students' do
+    if logged_in?
+      @student = current_user.students.build(params)
+      erb :'/students/new'
+    else
+      redirect '/students'
+    end
     @student.save
-    
-    redirect to "students/#{@student.id}"
   end
   
-  get '/student_entries/id' do
+  get '/students/:id' do
     @student = Student.find(params[:id])
-    erb :'/student_entries/show'
+    erb :'/students/show'
   end
   
-  get '/student_entries/id/edit' do
+  get '/students/:id/edit' do
     @student = Student.find(params[:id])
-    erb :'/student_entries/edit'
+    erb :'/students/edit'
   end
   
-  patch '/student_entries/:id' do
+  patch '/students/:id' do
     @student = Student.find(params[:id])
     @student.update(params[:student])
     
