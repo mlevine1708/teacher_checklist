@@ -1,1 +1,21 @@
-index.erb
+<p>Welcome <b><%= @current_user.username%></b>!</p>
+
+<% if @errors %>
+  <p style="color: red;"><%= @errors %></p>
+<% end %>
+
+<h1>My Students</h1>
+<br>
+<ul>
+  
+    <% @students.each do |student| %>
+      <% if student.user_id == @current_user.id %>
+        <li><a href="/students/<%= student.id %>"><b><%= student.name %></b></a> from <%= student.grade_level %></li>
+        <br></br>
+      <% end %>
+    <% end %>
+    <a href="/students/new">Add new student</a>
+  <% else %>
+    <p>You don't have any students! <a href="/students/new">Create a new one here</a>.</p>
+  <% end %>
+</ul>

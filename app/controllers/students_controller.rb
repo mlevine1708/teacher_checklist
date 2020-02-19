@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
     erb :'/students/new'
    # else 
       #redirect '/login'
-    end
+    #end
   end 
   
    
@@ -20,15 +20,20 @@ class StudentsController < ApplicationController
       @student = current_user.students.build(params)
       erb :'/students/new'
     else
-      redirect '/students'
+      redirect '/students/index'
     end
     @student.save
   end
   
+  
   get '/students/:id' do
     @student = Student.find(params[:id])
-    erb :'/students/show'
-  end
+    if logged_in? && @student.user == current_user
+     erb :'/students/show'
+    #else 
+    # redirect '/login'  
+    end
+  end 
   
   get '/students/:id/edit' do
     @student = Student.find(params[:id])
@@ -46,6 +51,7 @@ class StudentsController < ApplicationController
     @student.save
     
     redirect to "students/#{@student.id}"
+  end 
 end
 
 
