@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
   
   
-  #the purpose of this route is to render the login page/form 
   get '/signup' do
-    #erb (render) a view 
     if !logged_in?
     erb :signup 
     else
@@ -15,7 +13,7 @@ class UsersController < ApplicationController
     if params[:username] == "" || params[:password] == ""
       redirect to '/signup'
     else
-      User.create(:username => params[:username], :password => params[:password])
+      Users.create(:username => params[:username], :password => params[:password])
       redirect '/login'
     end
   end 
@@ -33,14 +31,15 @@ class UsersController < ApplicationController
     @user = Users.find_by(:username => params[:username])
     if @user != nil && @user.password == params[:password]
       session[:user_id] = @user.id
-      redirect to '/login'
+      redirect to '/user'
     end
-    erb :user
   end
   
   
   get '/logout' do
     if logged_in?
+      @user = current_user
+      @user = nil 
       session.destroy
       redirect to '/login'
     else
