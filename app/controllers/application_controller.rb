@@ -15,10 +15,6 @@ class ApplicationController < Sinatra::Base
     end 
   end
   
-  post '/users' do
-    redirect '/login'
-  end
-  
   
   helpers do 
     
@@ -29,7 +25,7 @@ class ApplicationController < Sinatra::Base
     
     
     def current_user
-     @current_user ||=User.find(session[:user_id])
+     @current_user ||=Users.find(session[:user_id])
     end
   end 
 end
