@@ -6,12 +6,12 @@ class StudentsController < ApplicationController
   end
   
   get '/students/new' do
-    #if logged_in?
-     # @current_user
+    if logged_in?
+      @current_user
     erb :'/students/new'
-   # else 
-      #redirect '/login'
-    #end
+    else 
+      redirect '/login'
+    end
   end 
   
    
@@ -51,6 +51,20 @@ class StudentsController < ApplicationController
     @student.save
     
     redirect to "students/#{@student.id}"
+  end 
+  
+  
+  helpers do 
+    
+    def logged_in?
+      !!session[:user_id]
+      #double bang (!!) 
+    end
+    
+    
+    def current_user
+     @current_user ||=User.find(session[:user_id])
+    end
   end 
 end
 
