@@ -2,37 +2,42 @@ class UsersController < ApplicationController
   
   
   get '/signup' do
-    if !logged_in?
-    erb :signup 
+    if !session[:user_id]
+      erb :'users/create'
     else
-    redirect to '/login'
-    end
+      redirect to '/students'
+    end 
   end 
   
   post '/signup' do 
-    if params[:username] == "" || params[:password] == ""
-      redirect to '/signup'
+    @user = Users.new(params)
+    if !@user.save
+      @errors = @user.errors.full_messages
+      erb :'/users/create'
     else
-      Users.create(:username => params[:username], :password => params[:password])
-      redirect '/login'
+      session[:user_id] = @user.id
+      redirect to '/students'
     end
   end 
   
   
   get '/login' do
-    if !logged_in?
-     erb :login 
-    else 
-      redirect to '/login'
+    if !session[:user_id]
+      erb :'/login'
+    else
+      redirect to '/students'
     end
   end 
   
   post '/login' do
-    @user = Users.find_by(:username => params[:username])
-    if @user != nil && @user.password == params[:password]
+    @user = Users.find_by(username: params[:username])
+    if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect to '/user'
-    end
+      redirect to '/students/new'
+    else
+      @errors = "Invalid username or password."
+      erb :'users/login'
+    end 
   end
   
   

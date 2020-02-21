@@ -17,7 +17,7 @@ class StudentsController < ApplicationController
    
   post '/students' do
     if logged_in?
-      @student = current_user.students.build(params)
+      @student = Student.create(name: params[:name], grade_level: params[:grade_level], user_id: current_user.id)
       erb :'/students/new'
     else
       redirect '/students/index'
