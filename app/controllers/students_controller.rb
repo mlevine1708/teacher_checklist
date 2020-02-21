@@ -1,8 +1,9 @@
 class StudentsController < ApplicationController
-  #get student_entries/new to render a form to create new entry
+  
   get '/students' do
-    @students = Student.all
-    erb :'/students/index'
+    if logged_in?
+      @students = current_user.students
+      erb 
   end
   
   get '/students/new' do

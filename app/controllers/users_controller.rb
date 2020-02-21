@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     if !session[:user_id]
       erb :'users/create'
     else
-      redirect to '/students'
+      redirect to ('/students')
     end 
   end 
   
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       erb :'/users/create'
     else
       session[:user_id] = @user.id
-      redirect to '/students'
+      redirect to ('/user')
     end
   end 
   
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       redirect to '/students/new'
     else
       @errors = "Invalid username or password."
-      erb :'users/login'
+      erb :'/login'
     end 
   end
   
