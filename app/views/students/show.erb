@@ -1,7 +1,25 @@
-<h1><%=@user.name%></h1>
-<h4>Students:</h4>
-<ul>
-  <%@user.students.each do |student|%>
-  <li><%=student.name%></li>
-  <%end%>
-</ul>
+<h1>Student Details</h1>
+
+<br></br>
+
+<h2><%= @students.names %></h2>
+
+<br>
+
+<p><b>Student Name:</b> <%= @students.name %></p>
+<p><b>Grade Level:</b> <%= @students.grade_level %></p>
+
+<br>
+
+<a href="/students/<%= @students.id %>/edit">Edit Student</a>
+
+<br></br>
+
+<form action="/students/<%= @students.id %>/delete" method="POST">
+  <input type="hidden" id="hidden" name="_method" value="DELETE"/>
+  <input type="submit" value="Delete Students">
+</form>
+
+<br></br>
+
+<a href="/students">View All Expenses</a>

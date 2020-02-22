@@ -1,4 +1,4 @@
-class Student < ActiveRecord::Base 
+class Students < ActiveRecord::Base 
   belongs_to :user
   has_many :assignments
 

@@ -31,11 +31,11 @@ class StudentsController < ApplicationController
   
   
   get '/students/:id' do
-    @student = Students.find(current_user.id)
-    if logged_in? && @student.user == current_user
-     erb :'/students/show'
-    else 
-     redirect '/login'  
+    if logged_in?
+      @student = Students.find_by_id(params[:id])
+      erb :'students/show'
+    else
+      redirect to '/login'
     end
   end 
   
