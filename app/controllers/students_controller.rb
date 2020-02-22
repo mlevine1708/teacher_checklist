@@ -2,8 +2,11 @@ class StudentsController < ApplicationController
   
   get '/students' do
     if logged_in?
-      @students = current_user.students
-      erb 
+      @student = current_user.student
+      erb :'students/index'
+    else 
+      redirect to('/login')
+    end
   end
   
   get '/students/new' do
@@ -11,7 +14,7 @@ class StudentsController < ApplicationController
       @current_user
     erb :'/students/new'
     else 
-      redirect '/login'
+      redirect to('/login')
     end
   end 
   
@@ -23,26 +26,32 @@ class StudentsController < ApplicationController
     else
       redirect '/students/index'
     end
-    @student.save
   end
   
   
+  
   get '/students/:id' do
-    @student = Student.find(params[:id])
+    @student = Students.find(current_user.id)
     if logged_in? && @student.user == current_user
      erb :'/students/show'
-    #else 
-    # redirect '/login'  
+    else 
+     redirect '/login'  
     end
   end 
   
   get '/students/:id/edit' do
     @student = Student.find(params[:id])
-    erb :'/students/edit'
+    if logged_in? && @student.user == current_user
+      @student = Students.find(params[:id])
+      @user = User.find(session[:user_id])
+      erb :'/students/edit'
+    else 
+      redirect to('/login')
+    end
   end
   
   patch '/students/:id' do
-    @student = Student.find(params[:id])
+    @student = Students.find(params[:id])
     @student.update(params[:student])
     
     if !params["name"]["grade_level"].empty?
@@ -64,7 +73,7 @@ class StudentsController < ApplicationController
     
     
     def current_user
-     @current_user ||=User.find(session[:user_id])
+     @current_user ||=Users.find(session[:user_id])
     end
   end 
 end

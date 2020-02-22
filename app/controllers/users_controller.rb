@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       erb :'/users/create'
     else
       session[:user_id] = @user.id
-      redirect to ('/user')
+      redirect to ('/welcome')
     end
   end 
   
